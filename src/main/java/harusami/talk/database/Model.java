@@ -13,21 +13,21 @@ import java.sql.*;
 
 /**
  * @classname: Model
- * @description: %{description}
+ * @description: 数据连接的基础类
  * @author: rinne
  * @date: 2019/03/18 上午 11:55
  * @Version 1.0
  */
 public class Model {
 
-    private String driver = "com.mysql.cj.jdbc.Driver";
-    private String url = "jdbc:mysql://localhost:3306/hrstalk?useSSL=false&serverTimezone=Asia/Shanghai";
-    private String user = "root";
-    private String pwd = "123456";
+    private final String driver = "com.mysql.cj.jdbc.Driver";
+    private final String url = "jdbc:mysql://localhost:3306/hrstalk?useSSL=false&serverTimezone=Asia/Shanghai";
+    private final String user = "root";
+    private final String pwd = "123456";
     private Connection connection = null;
 
     /**
-     *
+     * 与数据库进行连接
      * @return
      */
     protected Connection getConnection() {
@@ -46,13 +46,13 @@ public class Model {
     }
 
     /**
-     *
-     * @param connection
-     * @param sql
-     * @param objects
+     * 对数据库进行查询
+     * @param connection 获取数据库连接
+     * @param sql 获取执行SQL查询语句
+     * @param objects 获取SQL查询参数
      * @return
      */
-    public PreparedStatement preparedStatement(Connection connection, String sql, Object[] objects) {
+    protected PreparedStatement preparedStatement(Connection connection, String sql, Object[] objects) {
         PreparedStatement ps = null;
         try {
             int index = 1;
@@ -69,18 +69,17 @@ public class Model {
     }
 
     /**
-     *
+     * 对数据库进行增、删、改动作
      * @param sql
      * @param objects
      * @return
      */
-    public int executeUpdate(String sql, Object[] objects) {
+    protected int executeUpdate(String sql, Object[] objects) {
         connection = getConnection();
         PreparedStatement ps= null;
         try {
-            ps = preparedStatement(connection, sql, objects);
-            int effectRow = ps.executeUpdate();
-            return effectRow;
+            ps = preparedStatement(connection, sql, objects);;
+            return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             return 0;
@@ -90,7 +89,7 @@ public class Model {
     }
 
     /**
-     *
+     * 关闭数据库的连接
      * @param connection
      * @param ps
      * @param resultSet

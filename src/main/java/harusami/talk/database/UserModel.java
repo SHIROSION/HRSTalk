@@ -33,7 +33,7 @@ public class UserModel extends Model{
      * @param params
      * @return
      */
-    public List<UserInformation> search(String sql, Object...params) {
+    private List<UserInformation> search(String sql, Object...params) {
         List<UserInformation> list = new ArrayList<UserInformation>();
         Connection connection = this.getConnection();
         PreparedStatement  preparedStatement = null;
@@ -69,6 +69,11 @@ public class UserModel extends Model{
     public List<UserInformation> getTableAllData() {
         String sql = "select * from user_information";
         return search(sql);
+    }
+
+    public List<UserInformation> getOneData(UserInformation userInformation) {
+        String sql = "select * from user_information where uid = ?";
+        return search(sql, userInformation.getUid());
     }
 
     /**
@@ -133,15 +138,5 @@ public class UserModel extends Model{
     public int delete(UserInformation userInformation) {
         String sql = "DELETE FROM user_information WHERE uid = ?";
         return executeUpdate(sql, new Object[] {userInformation.getUid()});
-    }
-
-    public static void main(String[] args) {
-        UserInformation userInformation = new UserInformation();
-        userInformation.setLoginTime("2");
-        userInformation.setPwd("3");
-        UserModel userModel = new UserModel();
-        userModel.insert(userInformation);
-        List<UserInformation> list = userModel.getTableAllData();
-        return;
     }
 }
