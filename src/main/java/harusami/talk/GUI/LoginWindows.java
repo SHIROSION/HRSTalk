@@ -15,6 +15,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @classname: LoginWindows
@@ -24,19 +25,17 @@ import java.awt.event.ActionEvent;
  * @Version 1.0
  */
 public class LoginWindows extends JDialog {
+    JPanel mainJpanel = new JPanel();
+    private static final int DIALOG_WIDTH=414;
+    private static final int DIALOG_HEIGHT=340;
+    private static final int DIALOG_HEIGHT_EXTEND=573;
 
-    public void login() {
-        try {
-            BeautyEyeLNFHelper.launchBeautyEyeLNF();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void LoginWindows() {
 
         setAlwaysOnTop(true);
         setResizable(false);
-        setBounds(400, 100, 414, 340);
+        setBounds(400, 100, DIALOG_WIDTH,DIALOG_HEIGHT);
         getContentPane().setLayout(new BorderLayout());
-        JPanel mainJpanel = new JPanel();
         mainJpanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(mainJpanel, BorderLayout.CENTER);
         mainJpanel.setLayout(null);
@@ -44,14 +43,14 @@ public class LoginWindows extends JDialog {
         //设置居中
         setLocation(WindowsCentered.getXY(LoginWindows.this.getSize()));
 
-        JButton signUpButton = new JButton("注册");
-        signUpButton.addActionListener(new AbstractAction() {
+        JButton signUpButton = new JButton("注 册");
+        signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (LoginWindows.this.getHeight() == 573) {
-                    LoginWindows.this.setSize(414, 340);
+                if (LoginWindows.this.getHeight() == DIALOG_HEIGHT_EXTEND) {
+                    LoginWindows.this.setSize(DIALOG_WIDTH, DIALOG_HEIGHT);
                 } else {
-                    LoginWindows.this.setSize(414, 340);
+                    LoginWindows.this.setSize(DIALOG_WIDTH,DIALOG_HEIGHT_EXTEND);
                 }
             }
         });
@@ -59,7 +58,7 @@ public class LoginWindows extends JDialog {
         signUpButton.setBounds(53, 224, 93, 23);
         mainJpanel.add(signUpButton);
 
-        JButton signInButton = new JButton("登陆");
+        JButton signInButton = new JButton("登 陆");
         signInButton.setBounds(190, 224, 93, 23);
         mainJpanel.add(signInButton);
 
@@ -73,7 +72,7 @@ public class LoginWindows extends JDialog {
         mainJpanel.add(pwdTextField);
         pwdTextField.setColumns(10);
 
-        JLabel emailLable = new JLabel("邮箱");
+        JLabel emailLable = new JLabel("邮 箱");
         emailLable.setBounds(53, 151, 54, 15);
         mainJpanel.add(emailLable);
 
@@ -86,14 +85,20 @@ public class LoginWindows extends JDialog {
         ImageIcon icon = new ImageIcon("D:\\Java project\\HRSTalk\\src\\main\\java\\harusami\\talk\\GUI\\login.png");
         icon = ImageScale.getImage(icon, imageLabel.getWidth(), imageLabel.getHeight());
         imageLabel.setIcon((icon));
-        imageLabel.add(imageLabel);
+        mainJpanel.add(imageLabel);
 
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 
     public static void main(String[] args) {
+        try {
+            BeautyEyeLNFHelper.launchBeautyEyeLNF();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         LoginWindows loginWindows = new LoginWindows();
-        loginWindows.login();
+        loginWindows.LoginWindows();
     }
 }
