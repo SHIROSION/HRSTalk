@@ -13,6 +13,7 @@ import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -82,23 +83,68 @@ public class LoginWindows extends JDialog {
 
         JLabel imageLabel = new JLabel("New label");
         imageLabel.setBounds(0, 0, 360, 136);
-        ImageIcon icon = new ImageIcon("D:\\Java project\\HRSTalk\\src\\main\\java\\harusami\\talk\\GUI\\login.png");
+        ImageIcon icon = new ImageIcon(
+                "D:\\Java project\\HRSTalk\\src\\main\\java\\harusami\\talk\\GUI\\login.png");
         icon = ImageScale.getImage(icon, imageLabel.getWidth(), imageLabel.getHeight());
         imageLabel.setIcon((icon));
         mainJpanel.add(imageLabel);
 
+        JPanel panel = new JPanel();
+        panel.setBorder(new TitledBorder(null, "\u6CE8\u518C\u7528\u6237",
+                TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        panel.setBounds(12, 259, 336, 221);
+        mainJpanel.add(panel);
+        panel.setLayout(null);
+
+        JLabel signUpEmailLabel = new JLabel("邮 箱");
+        signUpEmailLabel.setBounds(41, 29, 55, 18);
+        panel.add(signUpEmailLabel);
+
+        JLabel signUpVerificationCodeLabel = new JLabel("验证码");
+        signUpVerificationCodeLabel.setBounds(41, 85, 55, 18);
+        panel.add(signUpVerificationCodeLabel);
+
+        JLabel signUpPwdLabel = new JLabel("密 码");
+        signUpPwdLabel.setBounds(41, 115, 55, 18);
+        panel.add(signUpPwdLabel);
+
+        JLabel signUpConfirmPwdLabel = new JLabel("确认密码");
+        signUpConfirmPwdLabel.setBounds(41, 145, 55, 18);
+        panel.add(signUpConfirmPwdLabel);
+
+        JTextField signUpEmailText = new JTextField();
+        signUpEmailText.setBounds(123, 22, 150, 25);
+        panel.add(signUpEmailText);
+        signUpEmailText.setColumns(10);
+
+        JTextField signUpVerificationCodeText = new JTextField();
+        signUpVerificationCodeText.setBounds(123, 80, 150, 25);
+        panel.add( signUpVerificationCodeText);
+        signUpVerificationCodeText.setColumns(10);
+
+        JTextField signUpPwdText = new JTextField();
+        signUpPwdText.setBounds(123, 113, 150, 25);
+        panel.add(signUpPwdText);
+        signUpPwdText.setColumns(10);
+
+        JTextField signUpConfirmPwdText = new JTextField();
+        signUpConfirmPwdText.setBounds(123, 145, 150, 25);
+        panel.add(signUpConfirmPwdText);
+        signUpConfirmPwdText.setColumns(10);
+
+        JButton sendVerificationCodeButton = new JButton("发送验证码");
+        sendVerificationCodeButton.setBounds(123, 52, 83, 23);
+        panel.add(sendVerificationCodeButton);
+
+        JButton cancelButton = new JButton("取 消");
+        cancelButton.setBounds(51, 182, 83, 27);
+        panel.add(cancelButton);
+
+        JButton cconfirmButton = new JButton("确 认");
+        cconfirmButton.setBounds(190, 182, 83, 27);
+        panel.add(cconfirmButton);
+
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        try {
-            BeautyEyeLNFHelper.launchBeautyEyeLNF();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        LoginWindows loginWindows = new LoginWindows();
-        loginWindows.LoginWindows();
     }
 }
