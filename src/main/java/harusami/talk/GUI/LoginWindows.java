@@ -147,4 +147,15 @@ public class LoginWindows extends JDialog {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
+
+    public static void main(String[] args) {
+        try {
+            BeautyEyeLNFHelper.launchBeautyEyeLNF();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        LoginWindows loginWindows = new LoginWindows();
+        loginWindows.LoginWindows();
+    }
 }
