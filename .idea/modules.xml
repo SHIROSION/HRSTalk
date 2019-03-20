@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/HRSTalk.iml" filepath="$PROJECT_DIR$/.idea/HRSTalk.iml" />
       <module fileurl="file://$PROJECT_DIR$/HRSTalkCilent/HRSTalkCilent.iml" filepath="$PROJECT_DIR$/HRSTalkCilent/HRSTalkCilent.iml" />
       <module fileurl="file://$PROJECT_DIR$/HRSTalkServer/HRSTalkServer.iml" filepath="$PROJECT_DIR$/HRSTalkServer/HRSTalkServer.iml" />
     </modules>
