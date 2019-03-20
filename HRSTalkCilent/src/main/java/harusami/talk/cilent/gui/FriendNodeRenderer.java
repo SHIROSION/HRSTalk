@@ -32,7 +32,7 @@ public class FriendNodeRenderer extends DefaultTreeCellRenderer {
         FriendNode friendNode = (FriendNode) value;
         //从节点中读取图片并且将图片自适应大小、居中
         ImageIcon icon = new ImageIcon(friendNode.getImageIcon() + "");
-        icon.setImage(icon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        icon.setImage(icon.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         //从节点中读取昵称和是否在线
         String isOnline = "离线";
         String text = "";
@@ -54,7 +54,7 @@ public class FriendNodeRenderer extends DefaultTreeCellRenderer {
         //设置文本
         setText(text);
         //设置图片和文本之间的距离
-        setIconTextGap(15);
+        setIconTextGap(20);
         return this;
     }
 }

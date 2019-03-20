@@ -73,6 +73,8 @@ public class LoginWindows extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 String getUserEmail = emailTextField.getText();
                 String getUserPwd = pwdTextField.getText();
+                new FriendList().friendList();
+                setVisible(false);
             }
         });
 
@@ -84,7 +86,7 @@ public class LoginWindows extends JDialog {
         mainJpanel.add(emailTextField);
         emailTextField.setColumns(10);
 
-        pwdTextField = new JTextField();
+        pwdTextField = new JPasswordField();
         pwdTextField.setBounds(133, 182, 150, 25);
         mainJpanel.add(pwdTextField);
         pwdTextField.setColumns(10);
@@ -138,12 +140,12 @@ public class LoginWindows extends JDialog {
         panel.add( signUpVerificationCodeText);
         signUpVerificationCodeText.setColumns(10);
 
-        signUpPwdText = new JTextField();
+        signUpPwdText = new JPasswordField();
         signUpPwdText.setBounds(123, 113, 150, 25);
         panel.add(signUpPwdText);
         signUpPwdText.setColumns(10);
 
-        signUpConfirmPwdText = new JTextField();
+        signUpConfirmPwdText = new JPasswordField();
         signUpConfirmPwdText.setBounds(123, 145, 150, 25);
         panel.add(signUpConfirmPwdText);
         signUpConfirmPwdText.setColumns(10);

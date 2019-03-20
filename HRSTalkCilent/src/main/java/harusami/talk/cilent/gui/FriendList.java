@@ -9,8 +9,12 @@ package harusami.talk.cilent.gui;
  * @date: 2019/03/20 下午 02:23
  */
 
+import harusami.talk.cilent.information.FriendNode;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * @classname: FriendList
@@ -22,6 +26,36 @@ import java.awt.*;
 public class FriendList extends JDialog {
 
     public void friendList() {
+
+        setAlwaysOnTop(true);
+        setResizable(false);
+
+        FriendNode root=new FriendNode("我的好友",3);
+        FriendNode node1=new FriendNode(new ImageIcon ("D:\\Java project\\HRSTalk\\HRSTalkCilent\\src\\main\\image\\picture.jpg"),"测试1",1,1);
+        FriendNode node2=new FriendNode(new ImageIcon ("D:\\Java project\\HRSTalk\\HRSTalkCilent\\src\\main\\image\\picture.jpg"),"测试2",0,1);
+        FriendNode node3=new FriendNode(new ImageIcon ("D:\\Java project\\HRSTalk\\HRSTalkCilent\\src\\main\\image\\picture.jpg"),"测试3",0,1);
+        FriendNode node4=new FriendNode(new ImageIcon ("D:\\Java project\\HRSTalk\\HRSTalkCilent\\src\\main\\image\\picture.jpg"),"测试4",0,1);
+        FriendNode node5=new FriendNode(new ImageIcon ("D:\\Java project\\HRSTalk\\HRSTalkCilent\\src\\main\\image\\picture.jpg"),"测试5",0,1);
+
+
+        root.add(node1);
+        root.add(node2);
+        root.add(node3);
+        root.add(node4);
+        root.add(node5);
+
+        //将刚才的根节点添加到JTree中
+        final JTree tree=new JTree(root);
+
+        //将树的前面连接去掉
+        tree.putClientProperty("JTree.lineStyle", "Horizontal");
+        //设置树的字体大小，样式
+        tree.setFont(new Font("微软雅黑", Font.PLAIN, 15));
+        //设置树节点的高度
+        tree.setRowHeight(70);
+        //设置单元描述
+        tree.setCellRenderer(new FriendNodeRenderer());
+
         setBounds(100, 100, 400, 650);
         getContentPane().setLayout(new BorderLayout());
         JPanel mainJpanel = new JPanel();
@@ -76,6 +110,35 @@ public class FriendList extends JDialog {
 
         JScrollPane scrollPane = new JScrollPane();
         friendJpanel.add(scrollPane, BorderLayout.CENTER);
+        scrollPane.setViewportView(tree);
+        friendJpanel.add(scrollPane);
+        //添加树的双击触发事件
+        tree.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new TalkWindows().talkWindows();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+//                new TalkWindows().talkWindows();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         JPanel mainInformationJpanel = new JPanel();
         tabbedPane.addTab("消息列表", null,  mainInformationJpanel, null);

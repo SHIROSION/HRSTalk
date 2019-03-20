@@ -102,15 +102,4 @@ public class TalkWindows extends JDialog {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        try {
-            BeautyEyeLNFHelper.launchBeautyEyeLNF();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        TalkWindows talkWindows = new  TalkWindows();
-        talkWindows.talkWindows();
-    }
-
 }
