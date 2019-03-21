@@ -17,6 +17,11 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 /**
  * @classname: TalkWindows
@@ -27,8 +32,12 @@ import java.awt.event.ActionListener;
  */
 public class TalkWindows extends JDialog {
 
-    JTextArea textArea;
-    JTextArea textChat;
+    private JTextArea textArea;
+    private JTextArea textChat;
+    private String host = "127.0.0.1";
+    private int port = 6145;
+    private Socket socket = null;
+    private Writer writer = null;
 
     public void talkWindows() {
         JPanel mainJpanel = new JPanel();
@@ -90,7 +99,21 @@ public class TalkWindows extends JDialog {
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+//                try {
+//                    socket = new Socket(host, port);
+//                    writer = new OutputStreamWriter(socket.getOutputStream());
+                    String temp = textArea.getText();
+                    if (temp != null) {
+//                        writer.write(temp);
+//                        writer.flush();
+                        textChat.append(temp + "\n");
+                        textArea.setText("");
+                    }
+//                } catch (UnknownHostException e1) {
+//                    e1.printStackTrace();
+//                } catch (IOException e1) {
+//                    e1.printStackTrace();
+//                }
             }
         });
         sendJpanel.add(sendButton);
@@ -117,4 +140,18 @@ public class TalkWindows extends JDialog {
         setVisible(true);
     }
 
+    public static void main(String[] args) {
+        try
+        {
+            org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
+        }
+        catch(Exception e)
+        {
+            //TODO exception
+            System.out.println("加载炫彩皮肤失败！");
+        }
+
+        TalkWindows talkWindows = new TalkWindows();
+        talkWindows.talkWindows();
+    }
 }
