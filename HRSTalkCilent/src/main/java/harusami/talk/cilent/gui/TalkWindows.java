@@ -15,6 +15,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @classname: TalkWindows
@@ -24,6 +26,9 @@ import java.awt.*;
  * @Version 1.0
  */
 public class TalkWindows extends JDialog {
+
+    JTextArea textArea;
+    JTextArea textChat;
 
     public void talkWindows() {
         JPanel mainJpanel = new JPanel();
@@ -82,6 +87,12 @@ public class TalkWindows extends JDialog {
         sendJpanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
         JButton sendButton = new JButton("发 送");
+        sendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
         sendJpanel.add(sendButton);
 
         JPanel mainScrollJpanel = new JPanel();
@@ -91,13 +102,17 @@ public class TalkWindows extends JDialog {
         JScrollPane scrollJpanel = new JScrollPane();
         mainScrollJpanel.add(scrollJpanel, BorderLayout.CENTER);
 
-        JTextArea textArea = new JTextArea();
+        textArea = new JTextArea();
         textArea.setLineWrap(true);
         scrollJpanel.setViewportView(textArea);
 
         JScrollPane scrollPane = new JScrollPane();
-        splitPane.setLeftComponent(scrollPane);
 
+        //splitPane.setLeftComponent(scrollPane);
+        textChat = new JTextArea();
+        textChat.setEditable(false);
+        textChat.add(new JScrollBar(JScrollBar.VERTICAL));
+        splitPane.setLeftComponent(textChat);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
