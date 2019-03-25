@@ -23,7 +23,7 @@ import java.net.Socket;
 public class Server {
     public void startService() {
         try {
-            ServerSocket ss = new ServerSocket(2222);
+            ServerSocket ss = new ServerSocket(8124);
             Socket socket = null;
 
             while(true) {

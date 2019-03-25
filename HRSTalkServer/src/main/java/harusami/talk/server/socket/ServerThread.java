@@ -40,10 +40,10 @@ public class ServerThread extends Thread {
         ObjectInputStream objectInputStream = null;
         ObjectOutputStream objectOutputStream = null;
         ObjectOutputStream objectOutputStream1 = null;
-        CommandTranser commandTranser = new CommandTranser();
 
         while(socket != null) {
             try {
+                CommandTranser commandTranser = (CommandTranser) objectInputStream.readObject();
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
                 if ("message".equals(commandTranser.getCmd())) {
                     //如果 msg.ifFlag即 服务器处理成功 可以向朋友发送信息 如果服务器处理信息失败 信息发送给发送者本人
@@ -56,9 +56,12 @@ public class ServerThread extends Thread {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
 
             try {
+                CommandTranser commandTranser = (CommandTranser) objectInputStream.readObject();
                 if ("WorldChat".equals(commandTranser.getCmd())) {
                     HashMap<String, Socket> map = SocketList.getMap();
                     Iterator<Map.Entry<String, Socket>> it = map.entrySet().iterator();
@@ -72,6 +75,8 @@ public class ServerThread extends Thread {
                     continue;
                 }
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }

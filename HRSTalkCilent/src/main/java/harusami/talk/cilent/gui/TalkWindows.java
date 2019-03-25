@@ -104,7 +104,7 @@ public class TalkWindows extends JDialog {
                 textArea.setText("");
                 CommandTranser commandTranser = new CommandTranser();
                 commandTranser.setData(temp);
-                commandTranser.setCmd("message");
+                commandTranser.setCmd("WorldChat");
                 clientSocket.sendData(commandTranser);
             }
         });
