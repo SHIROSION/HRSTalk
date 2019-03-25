@@ -9,6 +9,8 @@ package harusami.talk.cilent;
  * @date: 2019/03/19 上午 03:01
  */
 
+import java.util.UUID;
+
 /**
  * @classname: main
  * @description: %{description}
