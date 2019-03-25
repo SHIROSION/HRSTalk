@@ -9,7 +9,8 @@ package harusami.talk.cilent.gui;
  * @date: 2019/03/20 下午 03:31
  */
 
-import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
+import harusami.talk.cilent.information.CommandTranser;
+import harusami.talk.cilent.socket.ClientSocket;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -17,11 +18,9 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * @classname: TalkWindows
@@ -34,10 +33,7 @@ public class TalkWindows extends JDialog {
 
     private JTextArea textArea;
     private JTextArea textChat;
-    private String host = "127.0.0.1";
-    private int port = 6145;
-    private Socket socket = null;
-    private Writer writer = null;
+    private ClientSocket clientSocket = new ClientSocket();
 
     public void talkWindows() {
         JPanel mainJpanel = new JPanel();
@@ -99,23 +95,20 @@ public class TalkWindows extends JDialog {
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                try {
-//                    socket = new Socket(host, port);
-//                    writer = new OutputStreamWriter(socket.getOutputStream());
-                    String temp = textArea.getText();
-                    if (temp != null) {
-//                        writer.write(temp);
-//                        writer.flush();
-                        textChat.append(temp + "\n");
-                        textArea.setText("");
-                    }
-//                } catch (UnknownHostException e1) {
-//                    e1.printStackTrace();
-//                } catch (IOException e1) {
-//                    e1.printStackTrace();
-//                }
+                String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+                String temp = textArea.getText();
+                Date date = new Date();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd hh:mm:ss a");
+                String message = temp + simpleDateFormat.format(date);
+                textChat.append(message);
+                textArea.setText("");
+                CommandTranser commandTranser = new CommandTranser();
+                commandTranser.setData(temp);
+                commandTranser.setCmd("message");
+                clientSocket.sendData(commandTranser);
             }
         });
+
         sendJpanel.add(sendButton);
 
         JPanel mainScrollJpanel = new JPanel();
