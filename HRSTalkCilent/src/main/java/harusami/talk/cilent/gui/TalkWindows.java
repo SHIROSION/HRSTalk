@@ -18,6 +18,10 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -98,14 +102,23 @@ public class TalkWindows extends JDialog {
                 String uuid = UUID.randomUUID().toString().replaceAll("-", "");
                 String temp = textArea.getText();
                 Date date = new Date();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd hh:mm:ss a");
-                String message = temp + simpleDateFormat.format(date);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd a hh:mm:ss:▶");
+                String message = simpleDateFormat.format(date) + "\n" + temp + "\n";
                 textChat.append(message);
                 textArea.setText("");
                 CommandTranser commandTranser = new CommandTranser();
                 commandTranser.setData(temp);
                 commandTranser.setCmd("WorldChat");
-                clientSocket.sendData(commandTranser);
+//                clientSocket.sendData(commandTranser);
+                Socket sc = clientSocket.getSocket();
+                try {
+                    DataOutputStream out = new DataOutputStream(sc.getOutputStream());
+                    out.writeUTF("WorldChat" + "&&##" + temp);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+
             }
         });
 

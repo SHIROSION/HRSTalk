@@ -49,10 +49,6 @@ public class CommandTranser implements Serializable {
      */
     private String result = null;
 
-    public CommandTranser() {
-        super();
-    }
-
     public String getSender() {
         return sender;
     }
