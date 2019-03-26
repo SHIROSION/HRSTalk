@@ -1,4 +1,4 @@
-package harusami.talk.cilent.gui;
+package harusami.talk.client.gui;
 /*
  * @package: harusami.talk.cilent.gui
  * @program: HRSTalk
@@ -9,8 +9,8 @@ package harusami.talk.cilent.gui;
  * @date: 2019/03/20 下午 03:31
  */
 
-import harusami.talk.cilent.information.CommandTranser;
-import harusami.talk.cilent.socket.ClientSocket;
+import harusami.talk.client.socket.ClientSocket;
+import harusami.serialize.CommandTranser;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,13 +18,8 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * @classname: TalkWindows
@@ -99,7 +94,6 @@ public class TalkWindows extends JDialog {
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String uuid = UUID.randomUUID().toString().replaceAll("-", "");
                 String temp = textArea.getText();
                 Date date = new Date();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd a hh:mm:ss:▶");
@@ -109,14 +103,14 @@ public class TalkWindows extends JDialog {
                 CommandTranser commandTranser = new CommandTranser();
                 commandTranser.setData(temp);
                 commandTranser.setCmd("WorldChat");
-//                clientSocket.sendData(commandTranser);
-                Socket sc = clientSocket.getSocket();
-                try {
-                    DataOutputStream out = new DataOutputStream(sc.getOutputStream());
-                    out.writeUTF("WorldChat" + "&&##" + temp);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
+                clientSocket.sendData(commandTranser);
+//                Socket sc = clientSocket.getSocket();
+//                try {
+//                    DataOutputStream out = new DataOutputStream(sc.getOutputStream());
+//                    out.writeUTF("WorldChat" + "&&##" + temp);
+//                } catch (IOException e1) {
+//                    e1.printStackTrace();
+//                }
 
 
             }

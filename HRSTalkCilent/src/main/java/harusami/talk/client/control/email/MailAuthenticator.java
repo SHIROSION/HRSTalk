@@ -1,4 +1,4 @@
-package harusami.talk.cilent.control.email;
+package harusami.talk.client.control.email;
 /*
  * @package: harusami.talk.Control.email
  * @program: HRSTalk

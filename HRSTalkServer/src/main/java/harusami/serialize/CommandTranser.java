@@ -1,4 +1,4 @@
-package harusami.talk.cilent.information;
+package harusami.serialize;
 /*
  * @package: harusami.talk.cilent.control
  * @program: HRSTalk

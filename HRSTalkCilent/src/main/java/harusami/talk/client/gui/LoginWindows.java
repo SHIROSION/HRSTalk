@@ -1,4 +1,4 @@
-package harusami.talk.cilent.gui;
+package harusami.talk.client.gui;
 /*
  * @package: harusami.talk.GUI
  * @program: HRSTalk

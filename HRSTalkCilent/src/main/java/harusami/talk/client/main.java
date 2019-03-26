@@ -1,4 +1,4 @@
-package harusami.talk.cilent;
+package harusami.talk.client;
 /*
  * @package: harusami.talk
  * @program: HRSTalk
@@ -8,8 +8,6 @@ package harusami.talk.cilent;
  * @e-mail:  minami.rinne.me@gmail.com
  * @date: 2019/03/19 上午 03:01
  */
-
-import java.util.UUID;
 
 /**
  * @classname: main

@@ -1,4 +1,4 @@
-package harusami.talk.cilent.information;
+package harusami.talk.client.information;
 /*
  * @package: harusami.talk.cilent.information
  * @program: HRSTalk

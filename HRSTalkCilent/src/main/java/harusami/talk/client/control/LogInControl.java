@@ -1,4 +1,4 @@
-package harusami.talk.cilent.control;
+package harusami.talk.client.control;
 /*
  * @package: harusami.talk.Control
  * @program: HRSTalk
@@ -9,7 +9,7 @@ package harusami.talk.cilent.control;
  * @date: 2019/03/19 下午 08:20
  */
 
-import harusami.talk.cilent.information.LoginInformation;
+import harusami.talk.client.information.LoginInformation;
 
 /**
  * @classname: LogInControl

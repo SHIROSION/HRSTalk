@@ -1,4 +1,4 @@
-package harusami.talk.cilent.socket;
+package harusami.talk.client.socket;
 /*
  * @package: harusami.talk.cilent.socket
  * @program: HRSTalk
@@ -9,8 +9,8 @@ package harusami.talk.cilent.socket;
  * @date: 2019/03/24 下午 10:31
  */
 
-import harusami.talk.cilent.information.CommandTranser;
-import harusami.talk.cilent.information.UserInformation;
+import harusami.serialize.CommandTranser;
+import harusami.talk.client.information.UserInformation;
 
 import javax.swing.*;
 import java.text.SimpleDateFormat;

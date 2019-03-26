@@ -1,4 +1,4 @@
-package harusami.talk.server.information;
+package harusami.serialize;
 /*
  * @package: harusami.talk.cilent.control
  * @program: HRSTalk
@@ -95,6 +95,10 @@ public class CommandTranser implements Serializable {
 
     public String setCmd(String cmd) {
         return this.cmd = cmd;
+    }
+
+    public long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
 }

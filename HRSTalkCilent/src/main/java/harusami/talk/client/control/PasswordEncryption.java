@@ -1,4 +1,4 @@
-package harusami.talk.cilent.control;
+package harusami.talk.client.control;
 /*
  * @package: harusami.talk.Control
  * @program: HRSTalk

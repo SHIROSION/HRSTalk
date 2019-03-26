@@ -1,4 +1,4 @@
-package harusami.talk.cilent.socket;
+package harusami.talk.client.socket;
 /*
  * @package: harusami.talk.cilent.socket
  * @program: HRSTalk
@@ -9,7 +9,7 @@ package harusami.talk.cilent.socket;
  * @date: 2019/03/24 下午 08:43
  */
 
-import harusami.talk.cilent.information.CommandTranser;
+import harusami.serialize.CommandTranser;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -30,6 +30,7 @@ public class ClientSocket {
     private int port = 8124;
     private String serverAddress = "127.0.0.1";
     private Socket socket;
+    private CommandTranser commandTranser = null;
 
     public ClientSocket() {
         try {
@@ -59,11 +60,11 @@ public class ClientSocket {
         //主要的作用是用于写入对象信息与读取对象信息
         // 对象信息一旦写到文件上那么对象的信息就可以做到持久化了
         ObjectOutputStream objectOutputStream = null;
-
+        this.commandTranser = commandTranser;
         if (socket != null) {
             try {
                 objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                objectOutputStream.writeObject(commandTranser);
+                objectOutputStream.writeObject(this.commandTranser);
             } catch(UnknownHostException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "服务器端未开启");

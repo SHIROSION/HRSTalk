@@ -1,4 +1,4 @@
-package harusami.talk.cilent.gui;
+package harusami.talk.client.gui;
 /*
  * @package: harusami.talk.cilent.gui
  * @program: HRSTalk
@@ -9,7 +9,7 @@ package harusami.talk.cilent.gui;
  * @date: 2019/03/20 下午 02:23
  */
 
-import harusami.talk.cilent.information.FriendNode;
+import harusami.talk.client.information.FriendNode;
 
 import javax.swing.*;
 import java.awt.*;
