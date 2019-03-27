@@ -11,7 +11,7 @@ package harusami.talk.server.database;
 
 
 import harusami.talk.server.information.LoginInformation;
-import harusami.talk.server.information.SignUpInformation;
+import harusami.serialize.SignUpInformation;
 import harusami.talk.server.information.UserInformation;
 
 import java.sql.Connection;
@@ -94,13 +94,18 @@ public class UserModel extends Model{
         return search(sql, loginInformation.getUserEmail()).get(0).getPwd();
     }
 
+    public String getSignUpData(String getEmail) {
+        String sql = "select * from user_information where email = ?";
+        return search(sql, getEmail).get(0).getEmail();
+    }
+
     /**
      * @param signUpInformation
      * @return
      */
     public int insert(SignUpInformation signUpInformation) {
-        String sql = "insert into user_information (user_name, pwd, gender, email, login_ip, sign_up_time)" +
-                " value (?, ?, ?, ?, ?, ?)";
+        String sql = "insert into user_information (email, pwd, sign_up_time)" +
+                " value (?, ?, ?)";
         return executeUpdate(sql, new Object[]{
                 signUpInformation.getUserEmail(), signUpInformation.getUserPassword(), signUpInformation.getSignUpTime()
         });

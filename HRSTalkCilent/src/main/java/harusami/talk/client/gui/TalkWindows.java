@@ -9,6 +9,7 @@ package harusami.talk.client.gui;
  * @date: 2019/03/20 下午 03:31
  */
 
+import harusami.talk.client.control.TalkControl;
 import harusami.talk.client.socket.ClientSocket;
 import harusami.serialize.CommandTranser;
 
@@ -32,7 +33,6 @@ public class TalkWindows extends JDialog {
 
     private JTextArea textArea;
     private JTextArea textChat;
-    private ClientSocket clientSocket = new ClientSocket();
 
     public void talkWindows() {
         JPanel mainJpanel = new JPanel();
@@ -94,25 +94,18 @@ public class TalkWindows extends JDialog {
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                CommandTranser commandTranser = new CommandTranser();
                 String temp = textArea.getText();
                 Date date = new Date();
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd a hh:mm:ss:▶");
                 String message = simpleDateFormat.format(date) + "\n" + temp + "\n";
                 textChat.append(message);
                 textArea.setText("");
-                CommandTranser commandTranser = new CommandTranser();
                 commandTranser.setData(temp);
                 commandTranser.setCmd("WorldChat");
-                clientSocket.sendData(commandTranser);
-//                Socket sc = clientSocket.getSocket();
-//                try {
-//                    DataOutputStream out = new DataOutputStream(sc.getOutputStream());
-//                    out.writeUTF("WorldChat" + "&&##" + temp);
-//                } catch (IOException e1) {
-//                    e1.printStackTrace();
-//                }
-
-
+                TalkControl talkControl = new TalkControl(commandTranser);
+                talkControl.start();
+                System.out.println("线程" + talkControl.getId() + "已启动");
             }
         });
 
@@ -141,12 +134,10 @@ public class TalkWindows extends JDialog {
     }
 
     public static void main(String[] args) {
-        try
-        {
+        try {
             org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
         }
-        catch(Exception e)
-        {
+        catch(Exception e) {
             //TODO exception
             System.out.println("加载炫彩皮肤失败！");
         }

@@ -9,6 +9,10 @@ package harusami.talk.client.gui;
  * @date: 2019/03/19 上午 02:52
  */
 
+import harusami.serialize.CommandTranser;
+import harusami.talk.client.control.PasswordEncryption;
+import harusami.talk.client.control.SignUpControl;
+import harusami.serialize.SignUpInformation;
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
 import javax.swing.*;
@@ -17,6 +21,8 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @classname: LoginWindows
@@ -181,12 +187,24 @@ public class LoginWindows extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String getEmail = signUpEmailText.getText();
-                String getPwd = signUpPwdText.getText();
-                String getConfirmPwd = signUpConfirmPwdText.getText();
-                String getCode = signUpVerificationCodeText.getText();
 
-                if (getPwd.equals(getConfirmPwd)) {
+                if (signUpConfirmPwdText.getText().equals(signUpPwdText.getText())) {
+                    SignUpInformation signUpInformation = new SignUpInformation();
 
+                    signUpInformation.setUserEmail(getEmail);
+                    try {
+                        signUpInformation.setUserPassword(PasswordEncryption.getEncryptedPwd(signUpPwdText.getText()));
+                    } catch (NoSuchAlgorithmException e1) {
+                        e1.printStackTrace();
+                    } catch (UnsupportedEncodingException e1) {
+                        e1.printStackTrace();
+                    }
+                    //userInformation.setGender();
+                    CommandTranser commandTranser = new CommandTranser();
+                    commandTranser.setCmd("SignUp");
+                    commandTranser.setData(signUpInformation);
+                    SignUpControl signUpControl = new SignUpControl(commandTranser);
+                    signUpControl.run();
                 } else {
                     JOptionPane.showMessageDialog(
                             LoginWindows.this,"密码不一致或验证码错误",

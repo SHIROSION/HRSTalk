@@ -1,4 +1,4 @@
-package harusami.talk.client.information;
+package harusami.serialize;
 /*
  * @package: harusami.talk.information
  * @program: HRSTalk
@@ -9,6 +9,8 @@ package harusami.talk.client.information;
  * @date: 2019/03/20 上午 10:11
  */
 
+import java.io.Serializable;
+
 /**
  * @classname: SignUpInformation
  * @description: %{description}
@@ -16,7 +18,7 @@ package harusami.talk.client.information;
  * @date: 2019/03/20 上午 10:11
  * @Version 1.0
  */
-public class SignUpInformation {
+public class SignUpInformation implements Serializable {
 
     private String userEmail;
     private String userPassword;

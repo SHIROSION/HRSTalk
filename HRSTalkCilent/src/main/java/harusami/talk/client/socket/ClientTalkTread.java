@@ -68,9 +68,9 @@ public class ClientTalkTread extends Thread {
         }
     }
 
-    public void execute (CommandTranser commandTranser) {
+    private void execute(CommandTranser commandTranser) {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd hh:mm:ss a");
-        String message = commandTranser.getData() + simpleDateFormat.format(date);
+        //String message = commandTranser.getData() + simpleDateFormat.format(date);
     }
 }

@@ -25,7 +25,7 @@ import java.net.UnknownHostException;
  * @date: 2019/03/24 下午 08:43
  * @Version 1.0
  */
-public class ClientSocket {
+public class  ClientSocket {
 
     private int port = 8124;
     private String serverAddress = "127.0.0.1";
@@ -37,10 +37,10 @@ public class ClientSocket {
             socket = new Socket(serverAddress, port);
         } catch (UnknownHostException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "无法连接客户端");
+            JOptionPane.showMessageDialog(null, "无法连接服务器");
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "无法连接客户端");
+            JOptionPane.showMessageDialog(null, "无法连接服务器");
         }
     }
 
@@ -87,6 +87,7 @@ public class ClientSocket {
             try {
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
                 commandTranser = (CommandTranser) objectInputStream.readObject();
+                System.out.println(commandTranser.getCmd());
             } catch(UnknownHostException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "服务器端未开启");

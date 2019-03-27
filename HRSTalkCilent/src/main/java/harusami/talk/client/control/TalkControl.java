@@ -1,45 +1,43 @@
 package harusami.talk.client.control;
 /*
- * @package: harusami.talk.Control
+ * @package: harusami.talk.client.control
  * @program: HRSTalk
  * @description  ${description}
  *
  * @author:  rinne
  * @e-mail:  minami.rinne.me@gmail.com
- * @date: 2019/03/20 上午 12:41
+ * @date: 2019/03/27 上午 11:47
  */
-
 
 import harusami.serialize.CommandTranser;
 import harusami.talk.client.socket.ClientSocket;
 
 /**
- * @classname: SignUpControl
+ * @classname: TalkControl
  * @description: %{description}
  * @author: rinne
- * @date: 2019/03/20 上午 12:41
+ * @date: 2019/03/27 上午 11:47
  * @Version 1.0
  */
-public class SignUpControl extends Thread {
+public class TalkControl extends Thread {
 
-    private ClientSocket clientSocket;
     private CommandTranser commandTranser;
+    private ClientSocket clientSocket;
 
-    public SignUpControl() {
+    public TalkControl() {
         this.commandTranser = null;
-        this.clientSocket = null;
     }
 
-    public SignUpControl(CommandTranser commandTranser) {
+    public TalkControl(CommandTranser commandTranser) {
         this.commandTranser = commandTranser;
     }
 
     @Override
     public void run() {
         clientSocket = new ClientSocket();
-        clientSocket.sendData(this.commandTranser);
+        clientSocket.sendData(commandTranser);
         try {
-            sleep(2000);
+            sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

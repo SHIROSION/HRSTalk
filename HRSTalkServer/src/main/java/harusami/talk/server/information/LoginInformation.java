@@ -19,13 +19,15 @@ package harusami.talk.server.information;
 public class LoginInformation {
 
     private String userEmail;
+    private String time;
 
-     public LoginInformation () {
+    public LoginInformation() {
         userEmail = null;
     }
 
-    public LoginInformation (String userEmail) {
-         this.userEmail = userEmail;
+    public LoginInformation(String userEmail, String time) {
+        this.userEmail = userEmail;
+        this.time = time;
     }
 
     public String getUserEmail() {
@@ -36,4 +38,11 @@ public class LoginInformation {
         this.userEmail = userEmail;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }
