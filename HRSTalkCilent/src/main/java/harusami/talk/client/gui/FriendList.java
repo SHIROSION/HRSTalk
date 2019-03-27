@@ -10,8 +10,13 @@ package harusami.talk.client.gui;
  */
 
 import harusami.talk.client.information.FriendNode;
+import harusami.talk.client.information.TalkWindowsEntity;
+import harusami.talk.client.information.TalkWindowsList;
 
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -23,7 +28,9 @@ import java.awt.event.MouseListener;
  * @date: 2019/03/20 下午 02:23
  * @Version 1.0
  */
-public class FriendList extends JDialog {
+public class FriendList extends JDialog implements TreeSelectionListener {
+    private JTree tree;
+    private String friendName;
 
     public void friendList() {
 
@@ -44,9 +51,13 @@ public class FriendList extends JDialog {
         root.add(node4);
         root.add(node5);
 
-        //将刚才的根节点添加到JTree中
-        final JTree tree=new JTree(root);
+//        for (int i = 1; i < Map.getSize(); i++) {
+//            FriendNode node = new FriendNode(new ImageIcon(), map.get("name"),0,1);
+//            root.add(node);
+//        }
 
+        //将刚才的根节点添加到JTree中
+        tree = new JTree(root);
         //将树的前面连接去掉
         tree.putClientProperty("JTree.lineStyle", "Horizontal");
         //设置树的字体大小，样式
@@ -104,7 +115,7 @@ public class FriendList extends JDialog {
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         mainJpanel.add(tabbedPane, BorderLayout.CENTER);
 
-        JPanel friendJpanel = new JPanel();
+        final JPanel friendJpanel = new JPanel();
         tabbedPane.addTab("我的好友", null, friendJpanel, null);
         friendJpanel.setLayout(new BorderLayout(0, 0));
 
@@ -113,33 +124,7 @@ public class FriendList extends JDialog {
         scrollPane.setViewportView(tree);
         friendJpanel.add(scrollPane);
         //添加树的双击触发事件
-        tree.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                new TalkWindows().talkWindows();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-//                new TalkWindows().talkWindows();
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
-
+        tree.addTreeSelectionListener(this);
         JPanel mainInformationJpanel = new JPanel();
         tabbedPane.addTab("消息列表", null,  mainInformationJpanel, null);
 
@@ -162,6 +147,23 @@ public class FriendList extends JDialog {
             friendList.friendList();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void valueChanged(TreeSelectionEvent e) {
+        DefaultMutableTreeNode getNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+        if (getNode.getLevel() == 1) {
+            String friendName = ((FriendNode) getNode).getName();
+            TalkWindows talkWindows = TalkWindowsList.getTalkWindows("Talk");
+            if (talkWindows == null) {
+                new TalkWindows().talkWindows(friendName);
+                TalkWindowsEntity talkWindowsEntity = new TalkWindowsEntity();
+                talkWindowsEntity.setName(friendName);
+                talkWindowsEntity.setTalkWindows(talkWindows);
+            } else {
+                talkWindows.show();
+            }
         }
     }
 }

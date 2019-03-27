@@ -33,8 +33,10 @@ public class TalkWindows extends JDialog {
 
     private JTextArea textArea;
     private JTextArea textChat;
+    private String name;
 
-    public void talkWindows() {
+    public void talkWindows(String name) {
+        this.name = name;
         JPanel mainJpanel = new JPanel();
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setBounds(100, 100, 700, 600);
@@ -55,11 +57,11 @@ public class TalkWindows extends JDialog {
         panel.add(talkerJpanel, BorderLayout.CENTER);
         talkerJpanel.setLayout(new BorderLayout(0, 0));
 
-        JLabel talkerNameLabel = new JLabel("testName");
+        JLabel talkerNameLabel = new JLabel(this.name);
         talkerNameLabel.setFont(new Font("Dialog", Font.BOLD, 14));
         talkerJpanel.add(talkerNameLabel , BorderLayout.CENTER);
 
-        JLabel talkerDescriptionLabel = new JLabel("埋下一座城，关了所有灯");
+        JLabel talkerDescriptionLabel = new JLabel();
         talkerJpanel.add(talkerDescriptionLabel, BorderLayout.SOUTH);
 
         JSplitPane splitPane = new JSplitPane();
@@ -143,6 +145,6 @@ public class TalkWindows extends JDialog {
         }
 
         TalkWindows talkWindows = new TalkWindows();
-        talkWindows.talkWindows();
+        talkWindows.talkWindows("111");
     }
 }

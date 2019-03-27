@@ -10,8 +10,10 @@ package harusami.talk.server.socket;
  */
 
 import harusami.serialize.CommandTranser;
+import harusami.talk.server.control.LogInControl;
 import harusami.talk.server.control.SignUpControl;
 import harusami.serialize.SignUpInformation;
+import harusami.talk.server.information.LoginInformation;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -54,6 +56,25 @@ public class ServerThread extends Thread {
                         objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                         objectOutputStream.writeObject(information);
                     }
+                }
+
+                if (commandTranser.getCmd().equals("LogIn")) {
+                    LogInControl logInControl = new LogInControl((LoginInformation) commandTranser.getData());
+                    if (logInControl.logPassCheck()) {
+                        CommandTranser information = new CommandTranser();
+                        information.setCmd("LogInSuccessful");
+                        objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                        objectOutputStream.writeObject(information);
+                    } else {
+                        CommandTranser information = new CommandTranser();
+                        information.setCmd("LogInError");
+                        objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                        objectOutputStream.writeObject(information);
+                    }
+                }
+
+                if (commandTranser.getCmd().equals("Talk")) {
+                    String talk = (String) commandTranser.getData();
                 }
             } catch (Exception e) {
                 try {

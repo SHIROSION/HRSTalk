@@ -9,6 +9,11 @@ package harusami.talk.client;
  * @date: 2019/03/19 上午 03:01
  */
 
+import harusami.talk.client.socket.ClientTread;
+
+import java.net.ServerSocket;
+import java.net.Socket;
+
 /**
  * @classname: main
  * @description: %{description}
@@ -17,4 +22,18 @@ package harusami.talk.client;
  * @Version 1.0
  */
 public class main {
+    public static void main(String[] args) {
+        try {
+            ServerSocket ss = new ServerSocket(8124);
+            Socket socket = null;
+            while (true) {
+//                socket = ss.accept();
+//                ClientTread clientTread = new ClientTread(socket);
+//                clientTread.start();
+//                System.out.println("线程" + clientTread.getId() + "已启动");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
