@@ -48,8 +48,9 @@ public class ServerThread extends Thread {
                     SignUpControl signUpControl = new SignUpControl((SignUpInformation) commandTranser.getData());
                     if (signUpControl.executeSignUp()) {
                         CommandTranser information = new CommandTranser();
+                        information.setCmd("SignInSuccessful");
                         objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                        objectOutputStream.writeObject(information.setCmd("SignInSuccessful"));
+                        objectOutputStream.writeObject(information);
                     } else {
                         CommandTranser information = new CommandTranser();
                         information.setCmd("SignInError");

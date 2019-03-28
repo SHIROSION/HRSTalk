@@ -10,6 +10,10 @@ package harusami.talk.client.socket;
  */
 
 import harusami.serialize.CommandTranser;
+import harusami.talk.client.gui.LoginWindows;
+import harusami.talk.client.gui.TalkWindows;
+import harusami.talk.client.information.TalkWindowsEntity;
+import harusami.talk.client.information.TalkWindowsList;
 import harusami.talk.client.information.UserInformation;
 
 import javax.swing.*;
@@ -31,6 +35,8 @@ public class ClientTread extends Thread {
     private Socket socket;
     private boolean isOnline = true;
     private ClientSocket clientSocket;
+    private int port = 8124;
+    private String serverAddress = "127.0.0.1";
 
     public ClientTread(ClientSocket clientSocket) {
         this.clientSocket = clientSocket;
@@ -46,15 +52,43 @@ public class ClientTread extends Thread {
             CommandTranser commandTranser = clientSocket.getData();
             if (commandTranser != null) {
                 execute(commandTranser);
+            } else {
+                break;
             }
         }
     }
 
     private void execute(CommandTranser commandTranser) {
-        if ("Talk".equals(commandTranser.getCmd())) {
+        if (commandTranser.getCmd().equals("Talk")) {
             Date date = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd a hh:mm:ss:▶");
-            
+            String friendName = commandTranser.getSender();
+            TalkWindows talkWindows = TalkWindowsList.getTalkWindows(friendName);
+            if (TalkWindowsList.getTalkWindows(friendName) == null) {
+                talkWindows = new TalkWindows();
+                talkWindows.talkWindows(friendName);
+                TalkWindowsEntity talkWindowsEntity = new TalkWindowsEntity();
+                talkWindowsEntity.setName(friendName);
+                talkWindowsEntity.setTalkWindows(talkWindows);
+                String message = simpleDateFormat.format(date) + "\n" + commandTranser.getData() + "\n";
+                talkWindows.textChat.append(message);
+            } else {
+                talkWindows.show();
+            }
+        }
+
+        if (commandTranser.getCmd().equals("SignInError")) {
+            JOptionPane.showMessageDialog(LoginWindows.mainJpanel, "该用户已注册",
+                    "消息对话框",JOptionPane.WARNING_MESSAGE);
+        }
+
+        if (commandTranser.getCmd().equals("SignInSuccessful")) {
+            JOptionPane.showMessageDialog(LoginWindows.mainJpanel, "注册成功",
+                    "消息对话框",JOptionPane.PLAIN_MESSAGE);
+        }
+
+        if (commandTranser.getCmd().equals("LogInSuccessful")) {
+
         }
     }
 }

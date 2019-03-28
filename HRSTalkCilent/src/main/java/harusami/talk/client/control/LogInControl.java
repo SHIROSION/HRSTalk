@@ -24,4 +24,14 @@ public class LogInControl {
     private String password;
     private LoginInformation loginInformation;
 
+    public LogInControl() {
+        this.email = null;
+        this.password = null;
+        this.loginInformation = null;
+    }
+
+    public LogInControl(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 }

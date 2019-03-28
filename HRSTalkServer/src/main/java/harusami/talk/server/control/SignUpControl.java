@@ -46,9 +46,7 @@ public class SignUpControl {
 
     public boolean executeSignUp() {
         UserModel userModel = new UserModel();
-        String a = userModel.getSignUpData(signUpInformation.getUserEmail());
-        System.out.println(a);
-        if (userModel.getSignUpData(signUpInformation.getUserEmail()) == null ) {
+        if (userModel.getSignUpData(signUpInformation.getUserEmail())) {
             return userModel.insert(signUpInformation) == 1;
         } else {
             return false;

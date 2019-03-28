@@ -32,10 +32,10 @@ import java.security.NoSuchAlgorithmException;
  * @Version 1.0
  */
 public class LoginWindows extends JDialog {
-    JPanel mainJpanel = new JPanel();
-    private static final int DIALOG_WIDTH=414;
-    private static final int DIALOG_HEIGHT=340;
-    private static final int DIALOG_HEIGHT_EXTEND=573;
+    public static JPanel mainJpanel;
+    private static final int DIALOG_WIDTH = 414;
+    private static final int DIALOG_HEIGHT = 340;
+    private static final int DIALOG_HEIGHT_EXTEND = 573;
 
     private JTextField emailTextField;
     private JTextField pwdTextField;
@@ -46,6 +46,7 @@ public class LoginWindows extends JDialog {
 
 
     public void LoginWindows() {
+        mainJpanel = new JPanel();
 
         setAlwaysOnTop(true);
         setResizable(false);
@@ -79,8 +80,7 @@ public class LoginWindows extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 String getUserEmail = emailTextField.getText();
                 String getUserPwd = pwdTextField.getText();
-                new FriendList().friendList();
-                setVisible(false);
+
             }
         });
 
@@ -218,6 +218,7 @@ public class LoginWindows extends JDialog {
 
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setVisible(true);
+        //setModal(true);
     }
 
     public static void main(String[] args) {

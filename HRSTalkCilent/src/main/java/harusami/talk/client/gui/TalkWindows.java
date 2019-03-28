@@ -32,7 +32,7 @@ import java.util.Date;
 public class TalkWindows extends JDialog {
 
     private JTextArea textArea;
-    private JTextArea textChat;
+    public JTextArea textChat;
     private String name;
 
     public void talkWindows(String name) {

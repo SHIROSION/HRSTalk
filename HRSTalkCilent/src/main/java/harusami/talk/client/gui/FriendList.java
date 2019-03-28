@@ -18,8 +18,6 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 /**
  * @classname: FriendList
@@ -157,7 +155,8 @@ public class FriendList extends JDialog implements TreeSelectionListener {
             String friendName = ((FriendNode) getNode).getName();
             TalkWindows talkWindows = TalkWindowsList.getTalkWindows("Talk");
             if (talkWindows == null) {
-                new TalkWindows().talkWindows(friendName);
+                talkWindows = new TalkWindows();
+                talkWindows.talkWindows(friendName);
                 TalkWindowsEntity talkWindowsEntity = new TalkWindowsEntity();
                 talkWindowsEntity.setName(friendName);
                 talkWindowsEntity.setTalkWindows(talkWindows);

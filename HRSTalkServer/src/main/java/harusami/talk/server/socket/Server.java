@@ -12,6 +12,8 @@ package harusami.talk.server.socket;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @classname: Server
@@ -30,7 +32,9 @@ public class Server {
                 socket = ss.accept();
                 ServerThread thread = new ServerThread(socket);
                 thread.start();
-                System.out.println("线程" + thread.getId() + "已启动");
+                Date date = new Date();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd a hh:mm:ss:");
+                System.out.println(simpleDateFormat.format(date) + "  线程" + thread.getId() + " 已启动");
             }
         } catch(IOException e) {
             e.printStackTrace();

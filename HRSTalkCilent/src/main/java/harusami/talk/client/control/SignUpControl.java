@@ -12,6 +12,7 @@ package harusami.talk.client.control;
 
 import harusami.serialize.CommandTranser;
 import harusami.talk.client.socket.ClientSocket;
+import harusami.talk.client.socket.ClientTread;
 
 /**
  * @classname: SignUpControl
@@ -23,6 +24,7 @@ import harusami.talk.client.socket.ClientSocket;
 public class SignUpControl extends Thread {
 
     private ClientSocket clientSocket;
+    private ClientTread clientTread;
     private CommandTranser commandTranser;
 
     public SignUpControl() {
@@ -37,7 +39,9 @@ public class SignUpControl extends Thread {
     @Override
     public void run() {
         clientSocket = new ClientSocket();
+        clientTread = new ClientTread(clientSocket);
         clientSocket.sendData(this.commandTranser);
+        clientTread.start();
         try {
             sleep(2000);
         } catch (InterruptedException e) {

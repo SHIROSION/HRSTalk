@@ -57,7 +57,7 @@ public class  ClientSocket {
      * @param commandTranser
      */
     public void sendData(CommandTranser commandTranser) {
-        //主要的作用是用于写入对象信息与读取对象信息
+        // 主要的作用是用于写入对象信息与读取对象信息
         // 对象信息一旦写到文件上那么对象的信息就可以做到持久化了
         ObjectOutputStream objectOutputStream = null;
         this.commandTranser = commandTranser;
@@ -83,22 +83,18 @@ public class  ClientSocket {
         ObjectInputStream objectInputStream = null;
         CommandTranser commandTranser = null;
 
-        if (socket != null) {
-            try {
+        try {
+            if (socket != null) {
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
                 commandTranser = (CommandTranser) objectInputStream.readObject();
-                System.out.println(commandTranser.getCmd());
-            } catch(UnknownHostException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "服务器端未开启");
-                return null;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                return null;
-            } catch (IOException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "服务器端未开启");
-                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                if (objectInputStream != null) { objectInputStream.close(); }
+                if (socket != null) { socket.close(); }
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
         }
         return commandTranser;

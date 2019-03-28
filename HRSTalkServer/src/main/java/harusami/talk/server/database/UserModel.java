@@ -94,9 +94,9 @@ public class UserModel extends Model{
         return search(sql, loginInformation.getUserEmail()).get(0).getPwd();
     }
 
-    public String getSignUpData(String getEmail) {
+    public boolean getSignUpData(String getEmail) {
         String sql = "select * from user_information where email = ?";
-        return search(sql, getEmail).get(0).getEmail();
+        return search(sql, getEmail).size() == 0;
     }
 
     /**
