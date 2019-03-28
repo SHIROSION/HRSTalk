@@ -13,7 +13,9 @@ import harusami.serialize.CommandTranser;
 import harusami.talk.server.control.LogInControl;
 import harusami.talk.server.control.SignUpControl;
 import harusami.serialize.SignUpInformation;
-import harusami.talk.server.information.LoginInformation;
+import harusami.talk.server.database.UserModel;
+import harusami.serialize.LoginInformation;
+import harusami.talk.server.information.UserInformation;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -60,18 +62,17 @@ public class ServerThread extends Thread {
                 }
 
                 if (commandTranser.getCmd().equals("LogIn")) {
-                    LogInControl logInControl = new LogInControl((LoginInformation) commandTranser.getData());
-                    if (logInControl.logPassCheck()) {
-                        CommandTranser information = new CommandTranser();
-                        information.setCmd("LogInSuccessful");
-                        objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                        objectOutputStream.writeObject(information);
-                    } else {
-                        CommandTranser information = new CommandTranser();
-                        information.setCmd("LogInError");
-                        objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                        objectOutputStream.writeObject(information);
-                    }
+                    CommandTranser information = new CommandTranser();
+                    information.setCmd("LogInInformation");
+                    String data = new UserModel().loginData((LoginInformation) commandTranser.getData());
+                    information.setData(new UserModel().loginData((LoginInformation) commandTranser.getData()));
+                    objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                    objectOutputStream.writeObject(information);
+                }
+
+                if (commandTranser.getCmd().equals("LogInSuccessful")) {
+                    UserModel userModel = new UserModel();
+                    userModel.updateLoginTime((LoginInformation) commandTranser.getData());
                 }
 
                 if (commandTranser.getCmd().equals("Talk")) {

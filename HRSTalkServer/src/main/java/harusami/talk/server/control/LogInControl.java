@@ -9,8 +9,7 @@ package harusami.talk.server.control;
  * @date: 2019/03/27 上午 02:38
  */
 
-import harusami.talk.server.database.UserModel;
-import harusami.talk.server.information.LoginInformation;
+import harusami.serialize.LoginInformation;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,26 +32,10 @@ public class LogInControl {
     }
 
     public LogInControl(LoginInformation loginInformation) {
-        this.email = email;
-        this.password = password;
-        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.loginInformation = new LoginInformation();
-        loginInformation.setTime(time.format(new Date()));
-    }
-
-    public boolean logPassCheck() {
-        UserModel userModel = new UserModel();
-        String getResult = userModel.loginData(loginInformation);
-
-        if (getResult != null) {
-            if (getResult.equals(this.password)) {
-                userModel.loginData(loginInformation);
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-        return false;
+//        this.email = email;
+//        this.password = password;
+//        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        this.loginInformation = new LoginInformation();
+//        loginInformation.setTime(time.format(new Date()));
     }
 }

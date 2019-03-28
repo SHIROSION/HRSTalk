@@ -30,6 +30,7 @@ public class SignUpControl extends Thread {
     public SignUpControl() {
         this.commandTranser = null;
         this.clientSocket = null;
+        this.clientTread = null;
     }
 
     public SignUpControl(CommandTranser commandTranser) {

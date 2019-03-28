@@ -10,6 +10,8 @@ package harusami.talk.client.gui;
  */
 
 import harusami.serialize.CommandTranser;
+import harusami.serialize.LoginInformation;
+import harusami.talk.client.control.LogInControl;
 import harusami.talk.client.control.PasswordEncryption;
 import harusami.talk.client.control.SignUpControl;
 import harusami.serialize.SignUpInformation;
@@ -23,6 +25,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @classname: LoginWindows
@@ -78,9 +82,35 @@ public class LoginWindows extends JDialog {
         signInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String getUserEmail = emailTextField.getText();
-                String getUserPwd = pwdTextField.getText();
 
+                LoginInformation loginInformation = new LoginInformation();
+                loginInformation.setUserEmail(emailTextField.getText());
+
+                CommandTranser commandTranser = new CommandTranser();
+                commandTranser.setCmd("LogIn");
+                commandTranser.setData(loginInformation);
+
+                LogInControl logInControl = new LogInControl(commandTranser);
+                LogInControl.setPassword(pwdTextField.getText());
+                logInControl.run();
+
+                if (LogInControl.result()) {
+                    Date date = new Date();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd a hh:mm:ss");
+                    CommandTranser successfulInformation = new CommandTranser();
+                    LoginInformation sendLogInTime = new LoginInformation(emailTextField.getText(), simpleDateFormat.format(date));
+                    successfulInformation.setData(sendLogInTime);
+                    successfulInformation.setCmd("LogInSuccessful");
+
+                    LogInControl sendTime = new LogInControl(successfulInformation);
+                    sendTime.start();
+
+                    new FriendList().friendList();
+                    setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(LoginWindows.mainJpanel, "密码错误或用户名不存在",
+                            "消息对话框",JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
 

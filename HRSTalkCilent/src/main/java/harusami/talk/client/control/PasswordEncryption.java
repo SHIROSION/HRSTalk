@@ -32,7 +32,7 @@ public class PasswordEncryption {
      * @param hex
      * @return
      */
-    public static byte[] hexStringToByte(String hex) {
+    private static byte[] hexStringToByte(String hex) {
         int len = (hex.length() / 2);
         byte[] result = new byte[len];
         char[] hexChars = hex.toCharArray();
@@ -49,7 +49,7 @@ public class PasswordEncryption {
      * @param b
      * @return
      */
-    public static String byteToHexString(byte[] b) {
+    private static String byteToHexString(byte[] b) {
         StringBuffer hexString = new StringBuffer();
         for (int i = 0; i < b.length; i++) {
             String hex = Integer.toHexString(b[i] & 0xFF);

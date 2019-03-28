@@ -10,7 +10,7 @@ package harusami.talk.server.database;
  */
 
 
-import harusami.talk.server.information.LoginInformation;
+import harusami.serialize.LoginInformation;
 import harusami.serialize.SignUpInformation;
 import harusami.talk.server.information.UserInformation;
 
@@ -144,12 +144,12 @@ public class UserModel extends Model{
 
     /**
      *
-     * @param userInformation
+     * @param loginInformation
      * @return
      */
-    private int updateLoginTime(UserInformation userInformation) {
-        String sql = "update user_information set 'login_time' = ? where uid = ?";
-        return executeUpdate(sql, new Object[] {userInformation.getLoginTime()});
+    public int updateLoginTime(LoginInformation loginInformation) {
+        String sql = "update user_information set login_time = ? where email = ?";
+        return executeUpdate(sql, new Object[] {loginInformation.getTime(), loginInformation.getUserEmail()});
     }
 
     /**

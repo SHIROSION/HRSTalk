@@ -1,4 +1,4 @@
-package harusami.talk.server.information;
+package harusami.serialize;
 /*
  * @package: harusami.talk.information
  * @program: HRSTalk
@@ -9,6 +9,8 @@ package harusami.talk.server.information;
  * @date: 2019/03/19 下午 08:24
  */
 
+import java.io.Serializable;
+
 /**
  * @classname: LoginInformation
  * @description: %{description}
@@ -16,26 +18,23 @@ package harusami.talk.server.information;
  * @date: 2019/03/19 下午 08:24
  * @Version 1.0
  */
-public class LoginInformation {
+public class LoginInformation implements Serializable {
 
     private String userEmail;
     private String time;
 
-    public LoginInformation() {
-        userEmail = null;
+     public LoginInformation () {
+        this.userEmail = null;
+        this.time = null;
     }
 
-    public LoginInformation(String userEmail, String time) {
-        this.userEmail = userEmail;
-        this.time = time;
+    public LoginInformation (String userEmail, String time) {
+         this.userEmail = userEmail;
+         this.time = time;
     }
 
     public String getUserEmail() {
         return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
     }
 
     public String getTime() {
@@ -44,5 +43,9 @@ public class LoginInformation {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }

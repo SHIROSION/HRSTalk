@@ -10,6 +10,9 @@ package harusami.talk.client.socket;
  */
 
 import harusami.serialize.CommandTranser;
+import harusami.talk.client.control.LogInControl;
+import harusami.talk.client.control.PasswordEncryption;
+import harusami.talk.client.gui.FriendList;
 import harusami.talk.client.gui.LoginWindows;
 import harusami.talk.client.gui.TalkWindows;
 import harusami.talk.client.information.TalkWindowsEntity;
@@ -87,8 +90,8 @@ public class ClientTread extends Thread {
                     "消息对话框",JOptionPane.PLAIN_MESSAGE);
         }
 
-        if (commandTranser.getCmd().equals("LogInSuccessful")) {
-
+        if (commandTranser.getCmd().equals("LogInInformation")) {
+            LogInControl.setServerPassword((String) commandTranser.getData());
         }
     }
 }

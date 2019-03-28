@@ -76,7 +76,7 @@ public class Model {
      */
     protected int executeUpdate(String sql, Object[] objects) {
         connection = getConnection();
-        PreparedStatement ps= null;
+        PreparedStatement ps = null;
         try {
             ps = preparedStatement(connection, sql, objects);;
             return ps.executeUpdate();
