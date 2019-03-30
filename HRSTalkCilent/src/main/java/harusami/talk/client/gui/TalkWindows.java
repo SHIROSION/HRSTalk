@@ -39,7 +39,7 @@ public class TalkWindows extends JDialog {
     private UserInformation userInformation;
     private SendInformation sendInformation;
 
-    public void talkWindows(String name, UserInformation userInformation) {
+    public void talkWindows(final String name, final UserInformation userInformation) {
 
         this.name = name;
         this.userInformation = userInformation;
@@ -103,6 +103,7 @@ public class TalkWindows extends JDialog {
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 CommandTranser commandTranser = new CommandTranser();
                 String temp = textArea.getText();
                 Date date = new Date();
@@ -111,8 +112,9 @@ public class TalkWindows extends JDialog {
                 textChat.append(message);
                 textArea.setText("");
 
-                //commandTranser.setData();
+                SendInformation sendInformation = new SendInformation(userInformation.getEmail(), name, temp);
                 commandTranser.setCmd("Talk");
+                commandTranser.setData(sendInformation);
                 TalkControl talkControl = new TalkControl(commandTranser);
                 talkControl.start();
                 System.out.println("线程" + talkControl.getId() + "已启动");
@@ -132,9 +134,6 @@ public class TalkWindows extends JDialog {
         textArea.setLineWrap(true);
         scrollJpanel.setViewportView(textArea);
 
-        JScrollPane scrollPane = new JScrollPane();
-
-        //splitPane.setLeftComponent(scrollPane);
         textChat = new JTextArea();
         textChat.setEditable(false);
         textChat.add(new JScrollBar(JScrollBar.VERTICAL));
@@ -152,7 +151,8 @@ public class TalkWindows extends JDialog {
             System.out.println("加载炫彩皮肤失败！");
         }
 
-        TalkWindows talkWindows = new TalkWindows();
-        //talkWindows.talkWindows("111",);
+        UserInformation userInformation = new UserInformation();
+        userInformation.setEmail("12345");
+        new TalkWindows().talkWindows("1234", userInformation);
     }
 }

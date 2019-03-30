@@ -12,6 +12,7 @@ package harusami.talk.client.socket;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import harusami.serialize.CommandTranser;
+import harusami.serialize.SendInformation;
 import harusami.serialize.UserInformation;
 import harusami.talk.client.control.LogInControl;
 import harusami.talk.client.gui.LoginWindows;
@@ -63,18 +64,19 @@ public class ClientTread extends Thread {
         if (commandTranser.getCmd().equals("Talk")) {
             Date date = new Date();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd a hh:mm:ss:▶");
-            String friendName = commandTranser.getSender();
+            String friendName = ((SendInformation) commandTranser.getData()).getFrom();
             TalkWindows talkWindows = TalkWindowsList.getTalkWindows(friendName);
             if (TalkWindowsList.getTalkWindows(friendName) == null) {
                 talkWindows = new TalkWindows();
-//                talkWindows.talkWindows(friendName);
                 TalkWindowsEntity talkWindowsEntity = new TalkWindowsEntity();
                 talkWindowsEntity.setName(friendName);
                 talkWindowsEntity.setTalkWindows(talkWindows);
-                String message = simpleDateFormat.format(date) + "\n" + commandTranser.getData() + "\n";
+                String message = simpleDateFormat.format(date) + "\n" + ((SendInformation) commandTranser.getData()).getInformation() + "\n";
+               // TalkWindows.te
                 talkWindows.textChat.append(message);
             } else {
-                talkWindows.show();
+                String message = simpleDateFormat.format(date) + "\n" + ((SendInformation) commandTranser.getData()).getInformation() + "\n";
+                talkWindows.textChat.append(message);
             }
         }
 

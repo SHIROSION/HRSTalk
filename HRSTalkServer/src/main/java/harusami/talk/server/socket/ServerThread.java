@@ -10,6 +10,7 @@ package harusami.talk.server.socket;
  */
 
 import harusami.serialize.CommandTranser;
+import harusami.serialize.SendInformation;
 import harusami.talk.server.control.SignUpControl;
 import harusami.serialize.SignUpInformation;
 import harusami.talk.server.database.UserModel;
@@ -85,8 +86,16 @@ public class ServerThread extends Thread {
                 }
 
                 if (commandTranser.getCmd().equals("Talk")) {
-                    String talk = (String) commandTranser.getData();
-                    System.out.println((String) commandTranser.getData());
+                    SendInformation sendInformation = (SendInformation) commandTranser.getData();
+                    CommandTranser information = new CommandTranser();
+
+                    if (session.containsKey(sendInformation.getTo())) {
+                        information.setCmd("Talk");
+                        information.setData(sendInformation);
+
+                        objectOutputStream = new ObjectOutputStream(session.get(sendInformation.getTo()).getOutputStream());
+                        objectOutputStream.writeObject(information);
+                    }
                 }
             } catch (Exception e) {
                 try {

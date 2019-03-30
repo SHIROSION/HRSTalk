@@ -73,12 +73,12 @@ public class FriendList extends JDialog implements TreeSelectionListener {
         }
 
         JSONObject jsonObject = JSONObject.parseObject(getUserInformation);
-        userInformation.setEmail(jsonObject.getString("email"));
+        userInformation.setEmail(jsonObject.getString("12345"));
         userInformation.setUid(jsonObject.getInteger("uid"));
         userInformation.setUserName(jsonObject.getString("UserName"));
 
         FriendNode root=new FriendNode("我的好友",3);
-        FriendNode node1=new FriendNode(new ImageIcon ("D:\\Java project\\HRSTalk\\HRSTalkCilent\\src\\main\\image\\picture.jpg"),"测试1",1,1);
+        FriendNode node1=new FriendNode(new ImageIcon ("D:\\Java project\\HRSTalk\\HRSTalkCilent\\src\\main\\image\\picture.jpg"),"12345",1,1);
         FriendNode node2=new FriendNode(new ImageIcon ("D:\\Java project\\HRSTalk\\HRSTalkCilent\\src\\main\\image\\picture.jpg"),"测试2",0,1);
         FriendNode node3=new FriendNode(new ImageIcon ("D:\\Java project\\HRSTalk\\HRSTalkCilent\\src\\main\\image\\picture.jpg"),"测试3",0,1);
         FriendNode node4=new FriendNode(new ImageIcon ("D:\\Java project\\HRSTalk\\HRSTalkCilent\\src\\main\\image\\picture.jpg"),"测试4",0,1);
@@ -187,6 +187,7 @@ public class FriendList extends JDialog implements TreeSelectionListener {
                 TalkWindowsEntity talkWindowsEntity = new TalkWindowsEntity();
                 talkWindowsEntity.setName(friendName);
                 talkWindowsEntity.setTalkWindows(talkWindows);
+                TalkWindowsList.addChatUI(talkWindowsEntity);
             } else {
                 talkWindows.show();
             }
