@@ -9,6 +9,8 @@ package harusami.talk.client.gui;
  * @date: 2019/03/20 下午 03:31
  */
 
+import harusami.serialize.SendInformation;
+import harusami.serialize.UserInformation;
 import harusami.talk.client.control.TalkControl;
 import harusami.talk.client.socket.ClientSocket;
 import harusami.serialize.CommandTranser;
@@ -34,9 +36,14 @@ public class TalkWindows extends JDialog {
     private JTextArea textArea;
     public JTextArea textChat;
     private String name;
+    private UserInformation userInformation;
+    private SendInformation sendInformation;
 
-    public void talkWindows(String name) {
+    public void talkWindows(String name, UserInformation userInformation) {
+
         this.name = name;
+        this.userInformation = userInformation;
+
         JPanel mainJpanel = new JPanel();
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setBounds(100, 100, 700, 600);
@@ -103,8 +110,9 @@ public class TalkWindows extends JDialog {
                 String message = simpleDateFormat.format(date) + "\n" + temp + "\n";
                 textChat.append(message);
                 textArea.setText("");
-                commandTranser.setData(temp);
-                commandTranser.setCmd("WorldChat");
+
+                //commandTranser.setData();
+                commandTranser.setCmd("Talk");
                 TalkControl talkControl = new TalkControl(commandTranser);
                 talkControl.start();
                 System.out.println("线程" + talkControl.getId() + "已启动");
@@ -145,6 +153,6 @@ public class TalkWindows extends JDialog {
         }
 
         TalkWindows talkWindows = new TalkWindows();
-        talkWindows.talkWindows("111");
+        //talkWindows.talkWindows("111",);
     }
 }

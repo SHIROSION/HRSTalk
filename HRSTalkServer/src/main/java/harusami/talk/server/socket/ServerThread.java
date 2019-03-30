@@ -10,17 +10,17 @@ package harusami.talk.server.socket;
  */
 
 import harusami.serialize.CommandTranser;
-import harusami.talk.server.control.LogInControl;
 import harusami.talk.server.control.SignUpControl;
 import harusami.serialize.SignUpInformation;
 import harusami.talk.server.database.UserModel;
 import harusami.serialize.LoginInformation;
-import harusami.talk.server.information.UserInformation;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @classname: ServerThread
@@ -32,6 +32,7 @@ import java.net.Socket;
 public class ServerThread extends Thread {
 
     private Socket socket;
+    private static Map<String, Socket> session = new HashMap<>();
 
     public ServerThread(Socket socket) {
         this.socket = socket;
@@ -64,19 +65,28 @@ public class ServerThread extends Thread {
                 if (commandTranser.getCmd().equals("LogIn")) {
                     CommandTranser information = new CommandTranser();
                     information.setCmd("LogInInformation");
-                    String data = new UserModel().loginData((LoginInformation) commandTranser.getData());
                     information.setData(new UserModel().loginData((LoginInformation) commandTranser.getData()));
                     objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                     objectOutputStream.writeObject(information);
                 }
 
                 if (commandTranser.getCmd().equals("LogInSuccessful")) {
+                    CommandTranser information = new CommandTranser();
                     UserModel userModel = new UserModel();
+
                     userModel.updateLoginTime((LoginInformation) commandTranser.getData());
+                    session.put(commandTranser.getSender(), socket);
+
+                    information.setCmd("UserInformation");
+                    information.setData(new UserModel().getOneData(((LoginInformation) commandTranser.getData()).getUserEmail()));
+
+                    objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                    objectOutputStream.writeObject(information);
                 }
 
                 if (commandTranser.getCmd().equals("Talk")) {
                     String talk = (String) commandTranser.getData();
+                    System.out.println((String) commandTranser.getData());
                 }
             } catch (Exception e) {
                 try {

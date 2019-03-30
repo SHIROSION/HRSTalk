@@ -12,7 +12,7 @@ package harusami.talk.server.database;
 
 import harusami.serialize.LoginInformation;
 import harusami.serialize.SignUpInformation;
-import harusami.talk.server.information.UserInformation;
+import harusami.serialize.UserInformation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -76,12 +76,12 @@ public class UserModel extends Model{
 
     /**
      *
-     * @param userInformation
+     * @param getEmail
      * @return
      */
-    public List<UserInformation> getOneData(UserInformation userInformation) {
-        String sql = "select * from user_information where uid = ?";
-        return search(sql, userInformation.getUid());
+    public UserInformation getOneData(String getEmail) {
+        String sql = "select * from user_information where email = ?";
+        return search(sql, getEmail).get(0);
     }
 
     /**

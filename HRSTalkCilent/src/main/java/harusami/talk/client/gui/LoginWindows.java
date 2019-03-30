@@ -83,8 +83,10 @@ public class LoginWindows extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                String email = emailTextField.getText();
+
                 LoginInformation loginInformation = new LoginInformation();
-                loginInformation.setUserEmail(emailTextField.getText());
+                loginInformation.setUserEmail(email);
 
                 CommandTranser commandTranser = new CommandTranser();
                 commandTranser.setCmd("LogIn");
@@ -101,11 +103,12 @@ public class LoginWindows extends JDialog {
                     LoginInformation sendLogInTime = new LoginInformation(emailTextField.getText(), simpleDateFormat.format(date));
                     successfulInformation.setData(sendLogInTime);
                     successfulInformation.setCmd("LogInSuccessful");
+                    successfulInformation.setSender(email);
 
                     LogInControl sendTime = new LogInControl(successfulInformation);
                     sendTime.start();
 
-                    new FriendList().friendList();
+                    new FriendList(emailTextField.getText()).friendList();
                     setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(LoginWindows.mainJpanel, "密码错误或用户名不存在",

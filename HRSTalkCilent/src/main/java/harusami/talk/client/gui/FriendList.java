@@ -9,6 +9,8 @@ package harusami.talk.client.gui;
  * @date: 2019/03/20 下午 02:23
  */
 
+import com.alibaba.fastjson.JSONObject;
+import harusami.serialize.UserInformation;
 import harusami.talk.client.information.FriendNode;
 import harusami.talk.client.information.TalkWindowsEntity;
 import harusami.talk.client.information.TalkWindowsList;
@@ -18,6 +20,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
+import java.io.*;
 
 /**
  * @classname: FriendList
@@ -29,11 +32,50 @@ import java.awt.*;
 public class FriendList extends JDialog implements TreeSelectionListener {
     private JTree tree;
     private String friendName;
+    private UserInformation userInformation;
+    private String email;
+    private String getUserInformation;
+
+    public FriendList() {
+
+        this.tree = null;
+        this.friendName = null;
+        this.userInformation = null;
+        this.email = null;
+    }
+
+    public FriendList(String email) {
+        this.email = email;
+    }
 
     public void friendList() {
 
         setAlwaysOnTop(true);
         setResizable(false);
+
+        this.userInformation = new UserInformation();
+        String filePath  = email + ".json";
+        File file = new File(filePath);
+        getUserInformation = "";
+        try {
+            InputStreamReader reader = new InputStreamReader(new FileInputStream(file), "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String a;
+            while ((a = bufferedReader.readLine()) != null) {
+                getUserInformation += a;
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject jsonObject = JSONObject.parseObject(getUserInformation);
+        userInformation.setEmail(jsonObject.getString("email"));
+        userInformation.setUid(jsonObject.getInteger("uid"));
+        userInformation.setUserName(jsonObject.getString("UserName"));
 
         FriendNode root=new FriendNode("我的好友",3);
         FriendNode node1=new FriendNode(new ImageIcon ("D:\\Java project\\HRSTalk\\HRSTalkCilent\\src\\main\\image\\picture.jpg"),"测试1",1,1);
@@ -133,21 +175,6 @@ public class FriendList extends JDialog implements TreeSelectionListener {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        try {
-            org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            FriendList friendList = new FriendList();
-            friendList.friendList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void valueChanged(TreeSelectionEvent e) {
         DefaultMutableTreeNode getNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
@@ -156,7 +183,7 @@ public class FriendList extends JDialog implements TreeSelectionListener {
             TalkWindows talkWindows = TalkWindowsList.getTalkWindows("Talk");
             if (talkWindows == null) {
                 talkWindows = new TalkWindows();
-                talkWindows.talkWindows(friendName);
+                talkWindows.talkWindows(friendName, userInformation);
                 TalkWindowsEntity talkWindowsEntity = new TalkWindowsEntity();
                 talkWindowsEntity.setName(friendName);
                 talkWindowsEntity.setTalkWindows(talkWindows);

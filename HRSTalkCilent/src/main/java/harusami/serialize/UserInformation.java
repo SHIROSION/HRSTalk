@@ -1,4 +1,4 @@
-package harusami.talk.server.information;
+package harusami.serialize;
 /*
  * @package: harusami.talk.information
  * @program: HRSTalk
@@ -9,6 +9,8 @@ package harusami.talk.server.information;
  * @date: 2019/03/18 下午 04:50
  */
 
+import java.io.Serializable;
+
 /**
  * @classname: UserInformation
  * @description: %{description}
@@ -16,8 +18,9 @@ package harusami.talk.server.information;
  * @date: 2019/03/18 下午 04:50
  * @Version 1.0
  */
-public class UserInformation {
+public class UserInformation implements Serializable {
     private int uid;
+
     private String userName, pwd, gender, email, loginIp, loginTime, signUpTime;
 
     public int getUid() {
@@ -34,14 +37,6 @@ public class UserInformation {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
     }
 
     public String getGender() {
@@ -82,5 +77,13 @@ public class UserInformation {
 
     public void setSignUpTime(String signUpTime) {
         this.signUpTime = signUpTime;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 }

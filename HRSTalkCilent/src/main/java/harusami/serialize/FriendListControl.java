@@ -9,6 +9,8 @@ package harusami.serialize;
  * @date: 2019/03/28 上午 02:16
  */
 
+import java.io.Serializable;
+
 /**
  * @classname: FriendListControl
  * @description: %{description}
@@ -16,5 +18,5 @@ package harusami.serialize;
  * @date: 2019/03/28 上午 02:16
  * @Version 1.0
  */
-public class FriendListControl {
+public class FriendListControl implements Serializable {
 }

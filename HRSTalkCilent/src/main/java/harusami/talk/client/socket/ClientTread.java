@@ -9,20 +9,18 @@ package harusami.talk.client.socket;
  * @date: 2019/03/24 下午 10:31
  */
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import harusami.serialize.CommandTranser;
+import harusami.serialize.UserInformation;
 import harusami.talk.client.control.LogInControl;
-import harusami.talk.client.control.PasswordEncryption;
-import harusami.talk.client.gui.FriendList;
 import harusami.talk.client.gui.LoginWindows;
 import harusami.talk.client.gui.TalkWindows;
 import harusami.talk.client.information.TalkWindowsEntity;
 import harusami.talk.client.information.TalkWindowsList;
-import harusami.talk.client.information.UserInformation;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -69,7 +67,7 @@ public class ClientTread extends Thread {
             TalkWindows talkWindows = TalkWindowsList.getTalkWindows(friendName);
             if (TalkWindowsList.getTalkWindows(friendName) == null) {
                 talkWindows = new TalkWindows();
-                talkWindows.talkWindows(friendName);
+//                talkWindows.talkWindows(friendName);
                 TalkWindowsEntity talkWindowsEntity = new TalkWindowsEntity();
                 talkWindowsEntity.setName(friendName);
                 talkWindowsEntity.setTalkWindows(talkWindows);
@@ -92,6 +90,31 @@ public class ClientTread extends Thread {
 
         if (commandTranser.getCmd().equals("LogInInformation")) {
             LogInControl.setServerPassword((String) commandTranser.getData());
+        }
+
+        if (commandTranser.getCmd().equals("UserInformation")) {
+            UserInformation userInformation;
+            userInformation = (UserInformation) commandTranser.getData();
+            String filePath = "HRSTalkCilent\\src\\main\\data\\" + userInformation.getEmail() + ".json";
+            File file = new File(filePath);
+            if (!file.isDirectory()) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("uid", userInformation.getUid());
+                jsonObject.put("email", userInformation.getEmail());
+                jsonObject.put("UserName", userInformation.getUserName());
+                jsonObject.put("Gender", userInformation.getGender());
+                try {
+                    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+                    outputStreamWriter.write(JSON.toJSONString(jsonObject));
+                    outputStreamWriter.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
