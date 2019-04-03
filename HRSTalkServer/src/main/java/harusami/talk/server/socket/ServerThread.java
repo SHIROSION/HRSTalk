@@ -73,7 +73,8 @@ public class ServerThread extends Thread {
 
                 // 当报文是登陆请求的时候
                 // 从Model得到该用户的密码查询结果，然后通过PasswordEncryption的validPassword得到密码判断结果
-                // 若密码正确则给客户端返回正确的讯息并且返回该用户的个人信息，否则返回错误的讯息
+                // 若密码正确则给客户端返回正确的讯息并且返回该用户的个人信息并且在数据库上为该用户打上时间戳，否则返回错误的讯息
+                // 还会在session里注册用户登录时的连接信息
                 if (commandTranser.getCmd().equals("LogIn")) {
                     CommandTranser information = new CommandTranser();
                     if (PasswordEncryption.validPassword(((LoginInformation) commandTranser.getData()).getPassword(),
@@ -92,22 +93,6 @@ public class ServerThread extends Thread {
                         objectOutputStream.writeObject(information);
                     }
                 }
-
-                // 当报文是登陆成功的时候
-                // 在数据库上打上时间戳
-//                if (commandTranser.getCmd().equals("LogInSuccessful")) {
-//                    CommandTranser information = new CommandTranser();
-//                    UserModel userModel = new UserModel();
-//
-//                    userModel.updateLoginTime((LoginInformation) commandTranser.getData());
-//                    session.put(commandTranser.getSender(), socket);
-//
-//                    information.setCmd("UserInformation");
-//                    information.setData(new UserModel().getOneData(((LoginInformation) commandTranser.getData()).getUserEmail()));
-//
-//                    objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-//                    objectOutputStream.writeObject(information);
-//                }
 
                 // 当报文是聊天请求的时候
                 // 现在session中查找聊天对象的连接信息，然后把报文再次封装发送给聊天对象

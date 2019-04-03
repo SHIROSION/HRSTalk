@@ -80,11 +80,8 @@ public class LoginWindows extends JDialog {
         mainJpanel.add(signUpButton);
 
         // 登录按钮监听事件
-        // 当用户点击“登录”按钮的时候，会封装登录数据并且封装“LogIn”指令通过网络发送给服务端，并且把用户输入的密码交给LogInControl处理
-        // 服务端接收到报文后，会返回该用户存在数据库中MD5 + 盐的字符串，LogInControl中的result方法会返回该密码的判断正确与否的结果
-        // 当LogInControl中的result方法返回结果为正确时，会生成时间戳和"LogInSuccessful"的指令发送给服务端，告诉服务端用户登录成功
-        // 服务端成功接收到讯息后，会把时间戳提交到数据库中，同时客户端会进入用户个人好友列表UI中
-        // 若用户输入信息错误，会生成提示错误的窗口
+        // 当用户点击“登录”按钮的时候，会封装登录数据并且封装“LogIn”与密码指令通过网络发送给服务端
+        // 当服务器返回密码判断结果正确时会进入用户个人界面，否则弹出错误窗口
         JButton signInButton = new JButton("登 录");
         signInButton.addActionListener(new ActionListener() {
             @Override
