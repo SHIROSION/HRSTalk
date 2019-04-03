@@ -29,36 +29,25 @@ public class LogInControl extends Thread {
     private ClientSocket clientSocket;
     private ClientTread clientTread;
     private CommandTranser commandTranser;
-    private static String password;
-    private static String serverPassword;
+    private static boolean logInstatus;
 
     public LogInControl() {
         this.commandTranser = null;
         this.clientSocket = null;
         this.clientTread = null;
+        logInstatus = false;
     }
 
     public LogInControl(CommandTranser commandTranser) {
         this.commandTranser = commandTranser;
     }
 
-    public static void setPassword(String getPassword) {
-        password = getPassword;
+    public static void setLogInstatus(boolean status) {
+        logInstatus = status;
     }
 
-    public static void setServerPassword(String getServerPassword) {
-        serverPassword = getServerPassword;
-    }
-
-    public static boolean result() {
-        try {
-            return PasswordEncryption.validPassword(password, serverPassword);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return false;
+    public static boolean getLogInstatus() {
+        return logInstatus;
     }
 
     @Override

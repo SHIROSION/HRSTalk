@@ -12,7 +12,6 @@ package harusami.talk.client.gui;
 import harusami.serialize.SendInformation;
 import harusami.serialize.UserInformation;
 import harusami.talk.client.control.TalkControl;
-import harusami.talk.client.socket.ClientSocket;
 import harusami.serialize.CommandTranser;
 
 import javax.swing.*;
@@ -99,6 +98,10 @@ public class TalkWindows extends JDialog {
         mainSendJpanel.add(sendJpanel, BorderLayout.EAST);
         sendJpanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
+        // 该事件为用户聊天信息发送监听事件
+        // 当用户点击“发送”按钮的时候，程序会封装发送信息已经发送对象并序列化通过网络发给服务端
+        // 服务端接收到信息后，会在session里查找发送对象的连接socket对象
+        // 查找成功后会把信息再从封装通过网络发送给发送对象
         JButton sendButton = new JButton("发 送");
         sendButton.addActionListener(new ActionListener() {
             @Override

@@ -22,15 +22,17 @@ public class LoginInformation implements Serializable {
 
     private String userEmail;
     private String time;
+    private String password;
 
      public LoginInformation () {
         this.userEmail = null;
         this.time = null;
     }
 
-    public LoginInformation (String userEmail, String time) {
+    public LoginInformation (String userEmail, String password, String time) {
          this.userEmail = userEmail;
          this.time = time;
+         this.password = password;
     }
 
     public String getUserEmail() {
@@ -47,5 +49,13 @@ public class LoginInformation implements Serializable {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

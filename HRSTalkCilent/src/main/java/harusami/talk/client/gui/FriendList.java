@@ -175,6 +175,11 @@ public class FriendList extends JDialog implements TreeSelectionListener {
         setVisible(true);
     }
 
+    /**
+     * 当用户点击朋友树中的朋友节点的时候，会生成对应的朋友节点对象聊天窗口
+     * 聊天对象的信息会发送报文通过网络从服务端中获取
+     * @param e
+     */
     @Override
     public void valueChanged(TreeSelectionEvent e) {
         DefaultMutableTreeNode getNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();

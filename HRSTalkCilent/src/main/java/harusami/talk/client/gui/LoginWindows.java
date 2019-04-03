@@ -63,6 +63,7 @@ public class LoginWindows extends JDialog {
         //设置居中
         setLocation(WindowsCentered.getXY(LoginWindows.this.getSize()));
 
+        // 当点击“注册”按钮的时候窗口会变大
         JButton signUpButton = new JButton("注 册");
         signUpButton.addActionListener(new ActionListener() {
             @Override
@@ -78,36 +79,33 @@ public class LoginWindows extends JDialog {
         signUpButton.setBounds(53, 224, 93, 23);
         mainJpanel.add(signUpButton);
 
+        // 登录按钮监听事件
+        // 当用户点击“登录”按钮的时候，会封装登录数据并且封装“LogIn”指令通过网络发送给服务端，并且把用户输入的密码交给LogInControl处理
+        // 服务端接收到报文后，会返回该用户存在数据库中MD5 + 盐的字符串，LogInControl中的result方法会返回该密码的判断正确与否的结果
+        // 当LogInControl中的result方法返回结果为正确时，会生成时间戳和"LogInSuccessful"的指令发送给服务端，告诉服务端用户登录成功
+        // 服务端成功接收到讯息后，会把时间戳提交到数据库中，同时客户端会进入用户个人好友列表UI中
+        // 若用户输入信息错误，会生成提示错误的窗口
         JButton signInButton = new JButton("登 录");
         signInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String email = emailTextField.getText();
+                Date date = new Date();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd a hh:mm:ss");
 
                 LoginInformation loginInformation = new LoginInformation();
-                loginInformation.setUserEmail(email);
+                loginInformation.setUserEmail(emailTextField.getText());
+                loginInformation.setPassword(pwdTextField.getText());
+                loginInformation.setTime(simpleDateFormat.format(date));
 
                 CommandTranser commandTranser = new CommandTranser();
                 commandTranser.setCmd("LogIn");
                 commandTranser.setData(loginInformation);
 
                 LogInControl logInControl = new LogInControl(commandTranser);
-                LogInControl.setPassword(pwdTextField.getText());
                 logInControl.run();
 
-                if (LogInControl.result()) {
-                    Date date = new Date();
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd a hh:mm:ss");
-                    CommandTranser successfulInformation = new CommandTranser();
-                    LoginInformation sendLogInTime = new LoginInformation(emailTextField.getText(), simpleDateFormat.format(date));
-                    successfulInformation.setData(sendLogInTime);
-                    successfulInformation.setCmd("LogInSuccessful");
-                    successfulInformation.setSender(email);
-
-                    LogInControl sendTime = new LogInControl(successfulInformation);
-                    sendTime.start();
-
+                if (LogInControl.getLogInstatus()) {
                     new FriendList(emailTextField.getText()).friendList();
                     setVisible(false);
                 } else {
@@ -215,6 +213,10 @@ public class LoginWindows extends JDialog {
         cancelButton.setBounds(51, 182, 83, 27);
         panel.add(cancelButton);
 
+        // 该监听事件为用户注册监听事件
+        // 当用户点击“确定”按钮的时候，程序会把用户输入的数据进行封装并且序列化，其中密码会进行MD5 + 盐的加密
+        // 当用户在再次输入密码的输入框输入错误的时候点击“确定”按钮会生成错误的提示窗口
+        // 当注册数据发送给服务端，服务端会把相应的数据提交到数据库，若提交成功，服务端会成功的消息报文
         JButton confirmButton = new JButton("确 认");
         confirmButton.addActionListener(new ActionListener() {
             @Override
@@ -232,7 +234,6 @@ public class LoginWindows extends JDialog {
                     } catch (UnsupportedEncodingException e1) {
                         e1.printStackTrace();
                     }
-                    //userInformation.setGender();
                     CommandTranser commandTranser = new CommandTranser();
                     commandTranser.setCmd("SignUp");
                     commandTranser.setData(signUpInformation);
@@ -251,7 +252,6 @@ public class LoginWindows extends JDialog {
 
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setVisible(true);
-        //setModal(true);
     }
 
     public static void main(String[] args) {

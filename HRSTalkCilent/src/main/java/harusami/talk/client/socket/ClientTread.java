@@ -72,12 +72,19 @@ public class ClientTread extends Thread {
                 talkWindowsEntity.setName(friendName);
                 talkWindowsEntity.setTalkWindows(talkWindows);
                 String message = simpleDateFormat.format(date) + "\n" + ((SendInformation) commandTranser.getData()).getInformation() + "\n";
-               // TalkWindows.te
                 talkWindows.textChat.append(message);
             } else {
                 String message = simpleDateFormat.format(date) + "\n" + ((SendInformation) commandTranser.getData()).getInformation() + "\n";
                 talkWindows.textChat.append(message);
             }
+        }
+
+        if (commandTranser.getCmd().equals("LogInSuccessful")) {
+            LogInControl.setLogInstatus(true);
+            return;
+        } else if (commandTranser.getCmd().equals("LogInError")) {
+            LogInControl.setLogInstatus(false);
+            return;
         }
 
         if (commandTranser.getCmd().equals("SignInError")) {
@@ -88,10 +95,6 @@ public class ClientTread extends Thread {
         if (commandTranser.getCmd().equals("SignInSuccessful")) {
             JOptionPane.showMessageDialog(LoginWindows.mainJpanel, "注册成功",
                     "消息对话框",JOptionPane.PLAIN_MESSAGE);
-        }
-
-        if (commandTranser.getCmd().equals("LogInInformation")) {
-            LogInControl.setServerPassword((String) commandTranser.getData());
         }
 
         if (commandTranser.getCmd().equals("UserInformation")) {
